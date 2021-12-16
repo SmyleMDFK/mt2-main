@@ -1,0 +1,58 @@
+### compiling info
+/Srcs/Tools/Metin2MSAMaker is currently using the compiled libraries
+system and filesystem from the boost framework.
+
+This could be boring for someone, so I decided to not include such libraries
+inside Extern.rar because they also are based on the compiler version.
+
+If you want to use them, you should download the relative files from:
+http://sourceforge.net/projects/boost/files/boost-binaries/1.43.0/
+*libboost_filesystem-vc100-mt-s-1_43.zip
+*libboost_system-vc100-mt-s-1_43.zip
+
+If you're using a version higher than vs2010 as compiler, you should either
+manually compile the boost libraries or upgrade the boost library folder and take
+the newer ones from your updated boost version:
+http://sourceforge.net/projects/boost/files/boost-binaries/XXX/
+
+### how to clean the logs from clean_non_msa_stuff.bat
+@echo off
+setlocal EnableDelayedExpansion
+set exclude=.txt.msa.bat.
+for /R %%f in (*.*) do (
+   if /I "%exclude%" == "!exclude:%%~Xf.=!" del "%%f"
+)
+
+### mount d: from c:/d/mount_d.bat
+@cd %~dp0
+@subst d: .
+@pause
+
+### unmount d: from c:/d/unmount_d.bat
+@subst d: /D
+@pause
+
+### how to run it from Metin2MSAMakerG24_RUN.bat
+Metin2MSAMakerG24 "d:/ymir work/"
+pause
+
+# msamaker buggy models
+d:\ymir work\scholar_beige_m\dead.gr2 is buggy when processing
+
+# different names
+spider_egg is spider_spawn
+yamachun is yamachun_boss
+hanma is hanma_boss
+
+#### process with gr2.4 all the msa
+### in stdafx.h
+## from
+#include <granny.h>
+## to
+#include <granny2.4.0.10.h>
+
+### in Metin2MSAMaker.cpp
+## from
+if (IsNeedCalcAccumulation(filePath))
+## to
+// if (IsNeedCalcAccumulation(filePath))
