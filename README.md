@@ -38,4 +38,5 @@
  - gcc10
  - v143
  - c++11
+ - python2.7
  - Compilare testata pe: FreeBSD 13.0 & VS 2022
