@@ -4,7 +4,7 @@ app.ServerName = None
 
 SRV1 = {
 	"name":"mt2gratis",
-	"host":"10.5.50.231",
+	"host":"5.183.171.204",
 	"auth1":30001,
 	"ch1":30003,
 }
