@@ -5,6 +5,13 @@
  - Discord: https://discord.gg/G8MdTTrvkz
  - Site (fisierele le puteti testa in live-preview): https://mt2gratis.online/ 
  
+## Depedente:
+ - gcc10
+ - v143
+ - c++11
+ - python2.7
+ - Compilare testata pe: FreeBSD 13.0 & VS 2022
+ 
  ## Changelogs:
  - Am eliminat tot ce tine passpod-auth. #50001
  - Am eliminat tot ce tine matrix-auth. #50001
@@ -33,10 +40,3 @@
  - ENABLE_BUGFIXES: am adaugat fix1 - memerr (in fisiere puteti cauta: defined(ENABLE_BUGFIXES)//fix1 pentru a vedea unde am editat de exemplu pentru a avea un easy trace, voi schimba doar valoarea fix-ului). #50001
  - Am adaugat wiki in joc (Autor: necunoscut. Pe viitor voi schimba metoda prin care ia informatiile de la server. Sistemul poate fi dezactivat oricand.): https://gyazo.com/401defdbac5eb94fee99acab613d4c9f #50001
  - Am terminat de adaptat fereastra bonusurilor noua: https://gyazo.com/594cb1d716ff8afa468176f48b25d05c #50001
- 
-## Depedente:
- - gcc10
- - v143
- - c++11
- - python2.7
- - Compilare testata pe: FreeBSD 13.0 & VS 2022
