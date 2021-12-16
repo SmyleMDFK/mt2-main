@@ -1,7 +1,9 @@
 # mt2-main
  
-Am eliminat tot ce ține passpod-auth. 
-Am eliminat tot ce ține matrix-auth. 
+Am eliminat tot ce ține passpod-auth.
+
+Am eliminat tot ce ține matrix-auth.
+
 Am eliminat tot ce ține de HBCache. 
 Am eliminat tot ce ține de Auction (sistemul este neterminat). 
 Am eliminat tot ce ține de panama key (decrypt & encrypt type). 
