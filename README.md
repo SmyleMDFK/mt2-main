@@ -2,11 +2,11 @@
  
 Descriere:
 Proiectul consta intr-o sursa & server gratuite pe care sa le pun la dispozitie oricui doreste sa le foloseasca.\
-
+  
 Linkuri folositoare:
 Site: https://mt2gratis.online/ (fisierele le puteti testa in live-preview)\
 Discord: https://discord.gg/G8MdTTrvkz \
- 
+  
  Changelogs:\
  Am eliminat tot ce tine passpod-auth.\
  Am eliminat tot ce tine matrix-auth.\
@@ -35,4 +35,4 @@ Discord: https://discord.gg/G8MdTTrvkz \
  ENABLE_BUGFIXES: am adaugat fix1 - memerr (in fisiere puteti cauta: defined(ENABLE_BUGFIXES)//fix1 pentru a vedea unde am editat de exemplu pentru a avea un easy trace, voi schimba doar valoarea fix-ului).\
  Am adaugat wiki in joc (Autor: necunoscut. Pe viitor voi schimba metoda prin care ia informatiile de la server. Sistemul poate fi dezactivat oricând.): https://gyazo.com/401defdbac5eb94fee99acab613d4c9f \
  Am terminat de adaptat fereastra bonusurilor noua: https://gyazo.com/594cb1d716ff8afa468176f48b25d05c \
- 
+  
