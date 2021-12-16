@@ -11,7 +11,7 @@
  Target Server Version : 50651
  File Encoding         : 65001
 
- Date: 16/12/2021 09:23:20
+ Date: 16/12/2021 09:54:59
 */
 
 SET NAMES utf8mb4;
@@ -182,7 +182,7 @@ CREATE TABLE `gmlist`  (
 -- ----------------------------
 -- Records of gmlist
 -- ----------------------------
-INSERT INTO `gmlist` VALUES (1, 'iMerv3', 'iMerv3', '', 'ALL', 'IMPLEMENTOR');
+INSERT INTO `gmlist` VALUES (1, 'root', 'iMerv3', '', 'ALL', 'IMPLEMENTOR');
 
 -- ----------------------------
 -- Table structure for locale
