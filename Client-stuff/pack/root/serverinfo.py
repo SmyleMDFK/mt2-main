@@ -3,11 +3,10 @@ import localeInfo
 app.ServerName = None
 
 SRV1 = {
-	"name":"Metin2",
+	"name":"mt2gratis",
 	"host":"10.5.50.231",
 	"auth1":30001,
 	"ch1":30003,
-	"ch2":30007,
 }
 
 STATE_NONE = "..."
@@ -21,7 +20,6 @@ STATE_DICT = {
 
 SERVER1_CHANNEL_DICT = {
 	1:{"key":11,"name":"Channel 1","ip":SRV1["host"],"tcp_port":SRV1["ch1"],"udp_port":SRV1["ch1"],"state":STATE_NONE,},
-	2:{"key":12,"name":"Channel 2","ip":SRV1["host"],"tcp_port":SRV1["ch2"],"udp_port":SRV1["ch2"],"state":STATE_NONE,},
 }
 
 REGION_NAME_DICT = {
@@ -31,7 +29,6 @@ REGION_NAME_DICT = {
 REGION_AUTH_SERVER_DICT = {
 	0 : {
 		1 : { "ip":SRV1["host"], "port":SRV1["auth1"], },
-		2 : { "ip":SRV1["host"], "port":SRV1["auth1"], },
 	}
 }
 
