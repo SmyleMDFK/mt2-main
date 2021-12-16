@@ -1,7 +1,7 @@
 # mt2-main
  
-Site: https://mt2gratis.online/\
-Discord: https://discord.gg/G8MdTTrvkz\
+Site: https://mt2gratis.online/ \
+Discord: https://discord.gg/G8MdTTrvkz \
  
  Changelogs:\
  Am eliminat tot ce ține passpod-auth.\
