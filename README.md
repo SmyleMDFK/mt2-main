@@ -1,11 +1,13 @@
 # mt2-main
  
-Descriere:
+Descriere:\
 Proiectul consta intr-o sursa & server gratuite pe care sa le pun la dispozitie oricui doreste sa le foloseasca.
  
-Linkuri folositoare:
-Site (fisierele le puteti testa in live-preview): https://mt2gratis.online/
+ 
+Linkuri folositoare:\
+Site (fisierele le puteti testa in live-preview): https://mt2gratis.online/ \
 Discord: https://discord.gg/G8MdTTrvkz
+ 
  
  Changelogs:
  - Am eliminat tot ce tine passpod-auth.
