@@ -1,0 +1,12 @@
+ScriptType	MapSetting
+
+CellScale	200
+HeightScale	0.500000
+
+ViewRadius	128
+
+MapSize	3	2
+BasePosition	1024000	430400
+TextureSet	textureset\plechito_owl_map.txt
+Environment	magical_forest.msenv
+
