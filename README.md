@@ -13,7 +13,8 @@
  - Compilare testata pe: FreeBSD 13.0 & VS 2022
  
  ## Changelogs:
- - Am terminat de adaptat fereastra principala a caracterului: https://i.gyazo.com/8563690f81cc68e0bb8b577780a2fa13.mp4 #50002
+ - Am creat o noua functie folosita in uicharacter.py: player.IsPoly(). #50002
+ - Am terminat de adaptat fereastra principala a caracterului (https://i.gyazo.com/8563690f81cc68e0bb8b577780a2fa13.mp4). #50002
  - Am eliminat tot ce tine passpod-auth. #50001
  - Am eliminat tot ce tine matrix-auth. #50001
  - Am eliminat tot ce tine de HBCache. #50001
@@ -24,8 +25,8 @@
  - Am eliminat tot ce tine de XTrap. #50001
  - Am eliminat tot ce tine de GameGuard. #50001
  - Am eliminat tot ce tine de SpeedServer (nu ii vad rostul, schimba pur si simplu EXP de care ai nevoie pt. lvl-up [in functie de ziua 1-7 & dupa] daca speed_server era activat). #50001
- - Am creat un repo cu, ce functii creez pt. a actualiza: https://github.com/iMerv3/new_funcs #50001
- - Am terminat de adaptat interfata de select noua: https://gyazo.com/68b9ee3b2fbe7538aedf30fcf54d0d82 #50001
+ - Am creat un repo cu, ce functii creez pt. a actualiza (https://github.com/iMerv3/new_funcs). #50001
+ - Am terminat de adaptat interfata de select noua (https://gyazo.com/68b9ee3b2fbe7538aedf30fcf54d0d82). #50001
  - Am eliminat tot ce tine auth-brazil. #50001
  - Am eliminat tot ce tine eventul Three-Way (un event simplu, scris mult prea rau). #50001
  - Am eliminat tot ce tine de sistemul monarhilor (foarte probabil nu il foloseste nimeni). #50001
@@ -39,5 +40,5 @@
  - Am eliminat tot ce tine de vcard (nefolositor). #50001
  - Am eliminat tot ce tine de billing (nefolositor). #50001
  - ENABLE_BUGFIXES: am adaugat fix1 - memerr (in fisiere puteti cauta: defined(ENABLE_BUGFIXES)//fix1 pentru a vedea unde am editat de exemplu pentru a avea un easy trace, voi schimba doar valoarea fix-ului). #50001
- - Am adaugat wiki in joc (Autor: necunoscut. Pe viitor voi schimba metoda prin care ia informatiile de la server. Sistemul poate fi dezactivat oricand.): https://gyazo.com/401defdbac5eb94fee99acab613d4c9f #50001
- - Am terminat de adaptat fereastra bonusurilor noua: https://gyazo.com/594cb1d716ff8afa468176f48b25d05c #50001
+ - Am adaugat wiki in joc (Autor: necunoscut. Pe viitor voi schimba metoda prin care ia informatiile de la server. Sistemul poate fi dezactivat oricand.) (https://gyazo.com/401defdbac5eb94fee99acab613d4c9f). #50001
+ - Am terminat de adaptat fereastra bonusurilor noua (https://gyazo.com/594cb1d716ff8afa468176f48b25d05c). #50001
