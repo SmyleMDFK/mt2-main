@@ -1,4 +1,0 @@
-PET_SKILL_TOOLTIP_FEATHER	Însoþitorul are %d%% ºansa sã activeze Mers de Fulg pentru %.1f secunde.\nAtac %d - %d	SAAAA
-PET_SKILL_TOOLTIP_HEAL	Cand PV scade sub 20%%, ai \n a %d%% sansa sa cresti PV cu %d.	SAA
-PET_SKILL_TOOLTIP_INVINVIBILITY	Caracterul tau are %d%% sansa sa devina invincibil \n atunci cand PV scade sub 10%%. \n Durata efect: %.1f secunde.	SAA
-PET_SKILL_TOOLTIP_REMOVAL	Exista o sansa de %d%% pentru a inlatura imediat \n toate efectele precum incetinirea, otravirea sau sangerarea daca \n a fost afectat caracterul.	SAN
