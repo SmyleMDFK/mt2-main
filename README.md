@@ -13,6 +13,7 @@
  - Compilare testata pe: FreeBSD 13.0 & VS 2022
  
  ## Changelogs:
+ - Am terminat de adaptat fereastra principala a caracterului: https://i.gyazo.com/8563690f81cc68e0bb8b577780a2fa13.mp4 #50002
  - Am eliminat tot ce tine passpod-auth. #50001
  - Am eliminat tot ce tine matrix-auth. #50001
  - Am eliminat tot ce tine de HBCache. #50001
