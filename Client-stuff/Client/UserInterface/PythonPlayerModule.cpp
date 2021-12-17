@@ -2166,10 +2166,20 @@ PyObject* playerSendDragonSoulRefine(PyObject* poSelf, PyObject* poArgs)
 	return Py_BuildNone();
 }
 
+PyObject * playerIsPoly(PyObject* poSelf, PyObject* poArgs) {
+	CInstanceBase * pMainInstance = CPythonPlayer::Instance().NEW_GetMainActorPtr();
+	if (!pMainInstance) {
+		return Py_BuildValue("i", 0);
+	}
+
+	return Py_BuildValue("i", pMainInstance->IsPoly());
+}
+
 void initPlayer()
 {
 	static PyMethodDef s_methods[] =
 	{
+		{"IsPoly", playerIsPoly, METH_VARARGS},
 		{ "GetAutoPotionInfo",			playerGetAutoPotionInfo,			METH_VARARGS },
 		{ "SetAutoPotionInfo",			playerSetAutoPotionInfo,			METH_VARARGS },
 

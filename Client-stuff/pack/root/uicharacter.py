@@ -711,11 +711,11 @@ class CharacterWindow(ui.ScriptWindow):
 	def RefreshStatus(self):
 		if self.isLoaded==0:
 			return
-
+		
 		try:
 			self.GetChild("HP_Value").SetText(str(player.GetStatus(player.HP)) + '/' + str(player.GetStatus(player.MAX_HP)))
 			self.GetChild("SP_Value").SetText(str(player.GetStatus(player.SP)) + '/' + str(player.GetStatus(player.MAX_SP)))
-
+			
 			if app.ENABLE_CONQUEROR_LEVEL and self.change_conqueror_btn.IsDown():
 				self.GetChild("Level_Value").SetText("0")
 				self.GetChild("Exp_Value").SetText("0")
@@ -732,19 +732,15 @@ class CharacterWindow(ui.ScriptWindow):
 				self.GetChild("DEX_Value").SetText(str(player.GetStatus(player.DX)))
 				self.GetChild("HTH_Value").SetText(str(player.GetStatus(player.HT)))
 				self.GetChild("INT_Value").SetText(str(player.GetStatus(player.IQ)))
-
+			
 			self.GetChild("ATT_Value").SetText(self.__GetTotalAtkText())
 			self.GetChild("DEF_Value").SetText(self.__GetTotalDefText())
-
 			self.GetChild("MATT_Value").SetText(self.__GetTotalMagAtkText())
-			#self.GetChild("MATT_Value").SetText(str(player.GetStatus(player.MAG_ATT)))
-
 			self.GetChild("MDEF_Value").SetText(str(player.GetStatus(player.MAG_DEF)))
 			self.GetChild("ASPD_Value").SetText(str(player.GetStatus(player.ATT_SPEED)))
 			self.GetChild("MSPD_Value").SetText(str(player.GetStatus(player.MOVING_SPEED)))
 			self.GetChild("CSPD_Value").SetText(str(player.GetStatus(player.CASTING_SPEED)))
 			self.GetChild("ER_Value").SetText(str(player.GetStatus(player.EVADE_RATE)))
-
 		except:
 			#import exception
 			#exception.Abort("CharacterWindow.RefreshStatus.BindObject")
@@ -999,10 +995,12 @@ class CharacterWindow(ui.ScriptWindow):
 	if app.ENABLE_CONQUEROR_LEVEL:
 		def SelectChange(self, arg):
 			if arg == 0:
+				self.change_base_btn.Down()
 				self.change_conqueror_btn.SetUp()
 				self.change_base.Show()
 				self.change_conqueror.Hide()
 			else:
+				self.change_conqueror_btn.Down()
 				self.change_base_btn.SetUp()
 				self.change_conqueror.Show()
 				self.change_base.Hide()
