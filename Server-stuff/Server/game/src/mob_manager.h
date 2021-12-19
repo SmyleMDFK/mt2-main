@@ -1,7 +1,7 @@
 #ifndef __INC_METIN_II_MOB_MANAGER_H__
 #define __INC_METIN_II_MOB_MANAGER_H__
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 #include "../../common/in_game_wiki.h"
 #endif
 
@@ -148,7 +148,7 @@ class CMobManager : public singleton<CMobManager>
 
 		void RebindMobProto(LPCHARACTER ch);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 		typedef std::vector<CommonWikiData::TWikiMobDropInfo> TMobWikiInfoVector;
 		typedef std::map<DWORD, TMobWikiInfoVector> TMobWikiInfoMap;
 		
@@ -164,7 +164,7 @@ class CMobManager : public singleton<CMobManager>
 		std::map<std::string, CMob *> m_map_pkMobByName;
 		std::map<DWORD, CMobGroup *> m_map_pkMobGroup;
 		std::map<DWORD, CMobGroupGroup *> m_map_pkMobGroupGroup;
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 		TMobWikiInfoMap	m_wikiInfoMap;
 #endif
 		std::map<DWORD, double> m_mapRegenCount;

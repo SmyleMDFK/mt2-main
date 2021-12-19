@@ -21,7 +21,7 @@
 #include "../../common/VnumHelper.h"
 #include "DragonSoul.h"
 #include "cube.h"
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 #include "refine.h"
 #endif
 
@@ -1668,7 +1668,7 @@ void ITEM_MANAGER::CopyAllAttrTo(LPITEM pkOldItem, LPITEM pkNewItem)
 	pkOldItem->CopyAttributeTo(pkNewItem);
 }
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 DWORD ITEM_MANAGER::GetWikiItemStartRefineVnum(DWORD dwVnum)
 {
 	auto baseItemName = GetWikiItemBaseRefineName(dwVnum);

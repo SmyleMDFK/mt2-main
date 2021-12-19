@@ -13,12 +13,11 @@
 
 /* noi */
 #define INGAME_WIKI
-#define INGAME_WIKI
+#define INGAME_REGISTER
 
 
 
 /* bufixes*/
 #define ENABLE_BUGFIXES
-//fix1 - memerr
 /* end bugfixes */
 #endif

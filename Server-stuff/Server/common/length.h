@@ -6,6 +6,12 @@
 #define WORD_MAX 0xffff
 enum EMisc
 {
+#if defined(INGAME_REGISTER)
+	LOGIN_MIN_LEN = 2,
+	PASSWORD_MIN_LEN = 4,
+	EMAIL_MAX_LEN = 110,
+#endif
+	SOCIAL_ID_LEN = 7,
 	MAX_HOST_LENGTH			= 15,
 	IP_ADDRESS_LENGTH		= 15,
 	LOGIN_MAX_LEN			= 30,
@@ -32,8 +38,6 @@ enum EMisc
 	BANWORD_MAX_LEN			= 24,
 	SMS_MAX_LEN				= 80,
 	MOBILE_MAX_LEN			= 32,
-	SOCIAL_ID_MAX_LEN		= 18,
-
 	GUILD_NAME_MAX_LEN		= 12,
 
 	SHOP_HOST_ITEM_MAX_NUM	= 40,	/* 호스트의 최대 아이템 개수 */

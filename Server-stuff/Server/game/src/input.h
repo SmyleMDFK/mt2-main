@@ -151,7 +151,7 @@ class CInputMain : public CInputProcessor
 		void		PartyUseSkill(LPCHARACTER ch, const char * c_pData);
 		void		PartyParameter(LPCHARACTER ch, const char * c_pData);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 		void RecvWikiPacket(LPCHARACTER ch, const char * c_pData);
 #endif
 

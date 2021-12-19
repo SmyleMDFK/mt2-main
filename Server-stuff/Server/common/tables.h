@@ -294,7 +294,7 @@ typedef struct SAccountTable
 	DWORD		id;
 	char		login[LOGIN_MAX_LEN + 1];
 	char		passwd[PASSWD_MAX_LEN + 1];
-	char		social_id[SOCIAL_ID_MAX_LEN + 1];
+	char		social_id[SOCIAL_ID_LEN + 1];
 	char		status[ACCOUNT_STATUS_MAX_LEN + 1];
 	BYTE		bEmpire;
 	TSimplePlayer	players[PLAYER_PER_ACCOUNT];
@@ -986,7 +986,7 @@ typedef struct SPacketGDAuthLogin
 	DWORD	dwID;
 	DWORD	dwLoginKey;
 	char	szLogin[LOGIN_MAX_LEN + 1];
-	char	szSocialID[SOCIAL_ID_MAX_LEN + 1];
+	char	szSocialID[SOCIAL_ID_LEN + 1];
 	DWORD	adwClientKey[4];
 	int		iPremiumTimes[PREMIUM_MAX_NUM];
 } TPacketGDAuthLogin;
@@ -1104,7 +1104,7 @@ typedef struct SPacketLoginOnSetup
 {
 	DWORD   dwID;
 	char    szLogin[LOGIN_MAX_LEN + 1];
-	char    szSocialID[SOCIAL_ID_MAX_LEN + 1];
+	char    szSocialID[SOCIAL_ID_LEN + 1];
 	char    szHost[MAX_HOST_LENGTH + 1];
 	DWORD   dwLoginKey;
 	DWORD   adwClientKey[4];

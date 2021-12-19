@@ -19,7 +19,7 @@
 #include "item_manager.h"
 #include "item_manager_private_types.h"
 #include "group_text_parse_tree.h"
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 #include "../../common/in_game_wiki.h"
 #include "mob_manager.h"
 #endif
@@ -285,7 +285,7 @@ bool ITEM_MANAGER::ReadSpecialDropItemFile(const char * c_pszFileName)
 					sys_log(0,"        name %s count %d prob %d rare %d", name.c_str(), iCount, iProb, iRarePct);
 					pkGroup->AddItem(dwVnum, iCount, iProb, iRarePct);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 					auto pTableTemp = GetTable(dwVnum);
 					DWORD addVnum = dwVnum;
 					DWORD startRefineVnum = GetWikiItemStartRefineVnum(dwVnum);
@@ -667,7 +667,7 @@ bool ITEM_MANAGER::ReadMonsterDropItemGroup(const char * c_pszFileName)
 					sys_log(0,"        %s count %d rare %d", name.c_str(), iCount, iRarePct);
 					pkGroup->AddItem(dwVnum, iCount, iPartPct, iRarePct);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 					CommonWikiData::TWikiInfoTable* tbl;
 					if ((tbl = GetItemWikiInfo(dwVnum)) && !tbl->origin_vnum)
 						tbl->origin_vnum = iMobVnum;
@@ -750,7 +750,7 @@ bool ITEM_MANAGER::ReadMonsterDropItemGroup(const char * c_pszFileName)
 					sys_log(0,"        name %s pct %d count %d", name.c_str(), dwPct, iCount);
 					pkGroup->AddItem(dwVnum, dwPct, iCount);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 					CommonWikiData::TWikiInfoTable* tbl;
 					if ((tbl = GetItemWikiInfo(dwVnum)) && !tbl->origin_vnum)
 						tbl->origin_vnum = iMobVnum;
@@ -820,7 +820,7 @@ bool ITEM_MANAGER::ReadMonsterDropItemGroup(const char * c_pszFileName)
 					sys_log(0,"        name %s pct %d count %d", name.c_str(), dwPct, iCount);
 					pkLevelItemGroup->AddItem(dwItemVnum, dwPct, iCount);
 
-#if defined(INGAME_WIKI)
+#if defined(__INGAME_WIKI__)
 					CommonWikiData::TWikiInfoTable* tbl;
 					if ((tbl = GetItemWikiInfo(dwItemVnum)) && !tbl->origin_vnum)
 						tbl->origin_vnum = iMobVnum;
