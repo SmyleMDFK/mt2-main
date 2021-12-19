@@ -72,6 +72,7 @@
 	*/
 	// #define INGAME_WIKI_AUTOPACKET_SIZE
 #endif
+#define INGAME_REGISTER
 
 
 

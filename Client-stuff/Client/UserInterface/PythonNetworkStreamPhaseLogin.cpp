@@ -13,6 +13,16 @@ void CPythonNetworkStream::LoginPhase()
 
 	switch (header)
 	{
+//#if defined(INGAME_REGISTER)
+//		case HEADER_GC_REGISTER_FAIL:
+//			if (__RecvRegisterFailPacket())
+//				return;
+//			break;
+//		case HEADER_GC_REGISTER_SUCCESS:
+//			if (__RecvRegisterSuccessPacket())
+//				return;
+//			break;
+//#endif
 		case HEADER_GC_PHASE:
 			if (RecvPhasePacket())
 				return;
@@ -281,3 +291,33 @@ bool CPythonNetworkStream::__RecvLoginKeyPacket()
 
 	return true;
 }
+
+//#if defined(INGAME_REGISTER)
+//bool CPythonNetworkStream::__RecvRegisterFailPacket() {
+//	TPacketGCRegisterFail p;
+//	if (!Recv(sizeof(p), &p)) {
+//		return false;
+//	}
+//
+//	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_LOGIN], "OnRegisterFail", Py_BuildValue("(ii)", p.error, p.arg));
+//#ifdef _DEBUG
+//	Tracef(" RecvRegisterFailurePacket : [%s]\n", packet_failure.error);
+//#endif
+//
+//	return true;
+//}
+//
+//bool CPythonNetworkStream::__RecvRegisterSuccessPacket() {
+//	TPacketEmpty p;
+//	if (!Recv(sizeof(p), &p)) {
+//		return false;
+//	}
+//
+//	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_LOGIN], "OnRegisterSuccess", Py_BuildValue("()"));
+//#ifdef _DEBUG
+//	Tracef(" __RecvRegisterSuccessPacket\n");
+//#endif
+//
+//	return true;
+//}
+//#endif

@@ -4,7 +4,7 @@
 #ifdef M2_USE_POOL
 #include "pool.h"
 #endif
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 #include <memory>
 #include "../../common/in_game_wiki.h"
 #endif
@@ -369,7 +369,7 @@ class ITEM_MANAGER : public singleton<ITEM_MANAGER>
 		void			Destroy();
 		void			Update();	// 매 루프마다 부른다.
 		void			GracefulShutdown();
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 		DWORD											GetWikiItemStartRefineVnum(DWORD dwVnum);
 		std::string											GetWikiItemBaseRefineName(DWORD dwVnum);
 		int												GetWikiMaxRefineLevel(DWORD dwVnum);
@@ -443,7 +443,7 @@ class ITEM_MANAGER : public singleton<ITEM_MANAGER>
 		std::vector<TItemTable*> m_vec_item_vnum_range_info;
 		std::map<DWORD, DWORD>		m_map_ItemRefineFrom;
 		int				m_iTopOfTable;
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 		std::map<DWORD, std::unique_ptr<CommonWikiData::TWikiInfoTable>> m_wikiInfoMap;
 		std::map<DWORD, std::vector<CommonWikiData::TWikiItemOriginInfo>> m_itemOriginMap;
 #endif

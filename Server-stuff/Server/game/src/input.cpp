@@ -19,6 +19,9 @@
 #ifndef __WIN32__
 	#include "limit_time.h"
 #endif
+#if defined(INGAME_REGISTER)
+#include <boost/unordered_map.hpp>
+#endif
 #include "../../common/CommonDefines.h"
 
 #include "utils.h"
@@ -253,7 +256,10 @@ CInputHandshake::~CInputHandshake()
 	}
 }
 
-
+#if defined(INGAME_REGISTER)
+boost::unordered_map<std::string, uint32_t> g_registerdelay;
+uint32_t g_last_registerdelay;
+#endif
 std::map<DWORD, CLoginSim *> g_sim;
 std::map<DWORD, CLoginSim *> g_simByPID;
 std::vector<TPlayerTable> g_vec_save;

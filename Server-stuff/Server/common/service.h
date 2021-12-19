@@ -12,7 +12,7 @@
 
 
 /* noi */
-#define __INGAME_WIKI__
+#define INGAME_WIKI
 #define INGAME_WIKI
 
 

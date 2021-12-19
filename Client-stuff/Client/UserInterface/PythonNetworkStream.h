@@ -397,6 +397,11 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool RecvDefaultPacket(int header);
 		bool RecvPhasePacket();
 
+//#if defined(INGAME_REGISTER)
+//		bool __RecvRegisterFailPacket();
+//		bool __RecvRegisterSuccessPacket();
+//#endif
+
 		// Login Phase
 		bool __RecvLoginSuccessPacket3();
 		bool __RecvLoginSuccessPacket4();

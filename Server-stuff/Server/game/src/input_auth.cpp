@@ -7,12 +7,17 @@
 #include "protocol.h"
 #include "locale_service.h"
 #include "db.h"
-
 #ifndef __WIN32__
 	#include "limit_time.h"
 #endif
 
 #include "utils.h"
+#if defined(INGAME_REGISTER)
+#include <boost/algorithm/string.hpp>
+
+extern bool g_bShutdown;
+extern boost::unordered_map<std::string, uint32_t> g_registerdelay;
+#endif
 
 // #define ENABLE_ACCOUNT_W_SPECIALCHARS
 bool FN_IS_VALID_LOGIN_STRING(const char *str)
@@ -448,6 +453,135 @@ int CInputAuth::auth_OpenID(const char *authKey, const char *ipAddr, char *rID)
     }
 }
 
+#if defined(INGAME_REGISTER)
+void CInputAuth::RegisterFail(LPDESC d, uint8_t error, int32_t arg) {
+	if (!d)
+		return;
+
+	TPacketGCRegisterFail p;
+
+	p.header = HEADER_GC_REGISTER_FAIL;
+	p.error = error;
+	p.arg = arg;
+
+	d->Packet(&p, sizeof(p));
+
+	d->DelayedDisconnect(3);
+}
+
+void CInputAuth::Register(LPDESC d, const char * c_pData) {
+	if (!g_bAuthServer) {
+		d->SetPhase(PHASE_CLOSE);
+		return;
+	}
+
+	if (g_bShutdown) {
+		RegisterFail(d, 0, -1);
+		return;
+	}
+
+	const std::string addr = inet_ntoa(d->GetAddr().sin_addr);
+	itertype(g_registerdelay) it = g_registerdelay.find(addr);
+	if (it != g_registerdelay.end()) {
+		int32_t difference = it->second - thecore_pulse();
+		if (difference > 0) {
+			uint32_t sec = (difference / passes_per_sec);
+			if (sec == 0) {
+				sec = 1;
+			}
+
+			RegisterFail(d, 1, sec);
+			return;
+		} /* exploit sau script? */ else {
+			it->second = thecore_pulse() + PASSES_PER_SEC(3);
+		}
+	} /* exploit sau script? */ else {
+		g_registerdelay.insert(std::make_pair(addr, thecore_pulse() + PASSES_PER_SEC(3)));
+	}
+
+	TPacketCGRegister * pinfo = (TPacketCGRegister *) c_pData;
+
+	std::string username = {pinfo->username};
+
+	int32_t length = username.length();
+
+	if (length < LOGIN_MIN_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (length > LOGIN_MAX_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (username.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_") != std::string::npos) {
+		RegisterFail(d, 2, -1);
+		return;
+	}
+
+	boost::algorithm::to_lower(username);
+
+	std::string password = {pinfo->password};
+	length = password.length();
+
+	if (length < PASSWORD_MIN_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (length > PASSWD_MAX_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (password.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_") != std::string::npos) {
+		RegisterFail(d, 2, -1);
+		return;
+	}
+
+	std::string email = {pinfo->email};
+	length = email.length();
+
+	auto at = std::strchr(email.c_str(), '@'), dot = std::strchr(email.c_str(), '.');
+	if (at == nullptr || dot == nullptr) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (length > EMAIL_MAX_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (email.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890@.-_") != std::string::npos) {
+		RegisterFail(d, 2, -1);
+		return;
+	}
+
+	std::string socialid = {pinfo->socialid};
+	length = socialid.length();
+
+	if (socialid.length() != SOCIAL_ID_LEN) {
+		RegisterFail(d, 2, -1);
+		return;
+	} else if (socialid.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_") != std::string::npos) {
+		RegisterFail(d, 2, -1);
+		return;
+	}
+
+	std::auto_ptr<SQLMsg> pMsg(DBManager::instance().DirectQuery("select id from account.account where login='%s'", username.c_str()));
+	if (pMsg->Get()->uiNumRows != 0) {
+		RegisterFail(d, 3, -1);
+		return;
+	}
+
+	std::auto_ptr<SQLMsg>(DBManager::instance().DirectQuery("insert into account.account (login, password, social_id, email, status) values('%s', PASSWORD('%s'), '%s', '%s', 'OK')", username.c_str(), password.c_str(), socialid.c_str(), email.c_str()));
+
+	it = g_registerdelay.find(addr);
+	if (it == g_registerdelay.end()) {
+		g_registerdelay.insert(std::make_pair(addr, thecore_pulse() + PASSES_PER_SEC(60)));
+	} else {
+		it->second = thecore_pulse() + PASSES_PER_SEC(60);
+	}
+
+	TPacketEmpty p;
+
+	p.header = HEADER_GC_REGISTER_SUCCESS;
+
+	d->Packet(&p, sizeof(p));
+
+	d->DelayedDisconnect(3);
+}
+#endif
 
 int CInputAuth::Analyze(LPDESC d, BYTE bHeader, const char * c_pData)
 {
@@ -470,7 +604,11 @@ int CInputAuth::Analyze(LPDESC d, BYTE bHeader, const char * c_pData)
 		case HEADER_CG_PONG:
 			Pong(d);
 			break;
-
+#if defined(INGAME_REGISTER)
+		case HEADER_CG_REGISTER:
+			Register(d, c_pData);
+			break;
+#endif
 		case HEADER_CG_LOGIN3:
 			Login(d, c_pData);
 			break;

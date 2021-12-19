@@ -18,7 +18,11 @@ class CAccountConnector : public CNetworkStream, public CSingleton<CAccountConne
 		virtual ~CAccountConnector();
 
 		void SetHandler(PyObject* poHandler);
-		void SetLoginInfo(const char * c_szName, const char * c_szPwd);
+		void SetLoginInfo(const char * c_szName, const char * c_szPwd
+#if defined(INGAME_REGISTER)
+, bool bRegister, std::string email, std::string social
+#endif
+		);
 		void ClearLoginInfo( void );
 
 		bool Connect(const char * c_szAddr, int iPort, const char * c_szAccountAddr, int iAccountPort);
@@ -47,6 +51,10 @@ class CAccountConnector : public CNetworkStream, public CSingleton<CAccountConne
 		bool __AuthState_RecvHandshake();
 		bool __AuthState_RecvPing();
 		bool __AuthState_SendPong();
+#if defined(INGAME_REGISTER)
+		bool __AuthState_RecvRegisterFail();
+		bool __AuthState_RecvRegisterSuccess();
+#endif
 		bool __AuthState_RecvAuthSuccess();
 #ifdef USE_OPENID
 		bool __AuthState_RecvAuthSuccess_OpenID();
@@ -70,6 +78,11 @@ class CAccountConnector : public CNetworkStream, public CSingleton<CAccountConne
 		UINT m_eState;
 		std::string m_strID;
 		std::string m_strPassword;
+#if defined(INGAME_REGISTER)
+		bool m_register;
+		std::string m_email;
+		std::string m_social;
+#endif
 
 		std::string m_strAddr;
 		int m_iPort;

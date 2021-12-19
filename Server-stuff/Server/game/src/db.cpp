@@ -259,7 +259,7 @@ void DBManager::AnalyzeReturnQuery(SQLMsg * pMsg)
 					// PASSWORD('%s'), password, social_id, id, status
 					char szEncrytPassword[45 + 1] = {0, };
 					char szPassword[45 + 1] = {0, };
-					char szSocialID[SOCIAL_ID_MAX_LEN + 1] = {0, };
+					char szSocialID[SOCIAL_ID_LEN + 1] = {0, };
 					char szStatus[ACCOUNT_STATUS_MAX_LEN + 1] = {0, };
 					DWORD dwID = 0;
 

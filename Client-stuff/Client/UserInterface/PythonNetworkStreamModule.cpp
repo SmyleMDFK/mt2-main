@@ -372,20 +372,46 @@ PyObject* netConnectToAccountServer(PyObject* poSelf, PyObject* poArgs)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-PyObject* netSetLoginInfo(PyObject* poSelf, PyObject* poArgs)
-{
+PyObject* netSetLoginInfo(PyObject* poSelf, PyObject* poArgs) {
 	char* szName;
-	if (!PyTuple_GetString(poArgs, 0, &szName))
+	if (!PyTuple_GetString(poArgs, 0, &szName)) {
 		return Py_BuildException();
+	}
 
 	char* szPwd;
-	if (!PyTuple_GetString(poArgs, 1, &szPwd))
+	if (!PyTuple_GetString(poArgs, 1, &szPwd)) {
 		return Py_BuildException();
+	}
 
-	CPythonNetworkStream& rkNetStream=CPythonNetworkStream::Instance();
-	CAccountConnector & rkAccountConnector = CAccountConnector::Instance();
-	rkNetStream.SetLoginInfo(szName, szPwd);
-	rkAccountConnector.SetLoginInfo(szName, szPwd);
+#if defined(INGAME_REGISTER)
+	bool bRegister = false;
+	if (!PyTuple_GetBoolean(poArgs, 2, &bRegister)) {
+		return Py_BuildException();
+	}
+
+	char* email;
+	if (!PyTuple_GetString(poArgs, 3, &email)) {
+		return Py_BuildException();
+	}
+
+	char* social;
+	if (!PyTuple_GetString(poArgs, 4, &social)) {
+		return Py_BuildException();
+	}
+#endif
+
+#if defined(INGAME_REGISTER)
+	if (bRegister == false) {
+		CPythonNetworkStream::Instance().SetLoginInfo(szName, szPwd);
+	}
+#else
+	CPythonNetworkStream::Instance().SetLoginInfo(szName, szPwd);
+#endif
+	CAccountConnector::Instance().SetLoginInfo(szName, szPwd
+#if defined(INGAME_REGISTER)
+, bRegister, email, social
+#endif
+	);
 	return Py_BuildNone();
 }
 
@@ -1878,7 +1904,15 @@ void initnet()
 	};
 
 	PyObject* poModule = Py_InitModule("net", s_methods);
-
+#if defined(INGAME_REGISTER)
+	PyModule_AddIntConstant(poModule, "LOGIN_MIN_LEN", LOGIN_MIN_LEN);
+	PyModule_AddIntConstant(poModule, "LOGIN_MAX_LEN", ID_MAX_NUM);
+	PyModule_AddIntConstant(poModule, "PASSWORD_MIN_LEN", PASSWORD_MIN_LEN);
+	PyModule_AddIntConstant(poModule, "PASSWORD_MAX_LEN", PASS_MAX_NUM);
+	PyModule_AddIntConstant(poModule, "EMAIL_MIN_LEN", EMAIL_MIN_LEN);
+	PyModule_AddIntConstant(poModule, "EMAIL_MAX_LEN", EMAIL_MAX_LEN);
+	PyModule_AddIntConstant(poModule, "SOCIAL_ID_LEN", SOCIAL_ID_LEN);
+#endif
 	PyModule_AddIntConstant(poModule, "ACCOUNT_CHARACTER_SLOT_LAST_PLAYTIME", CPythonNetworkStream::ACCOUNT_CHARACTER_SLOT_LAST_PLAYTIME);
 	PyModule_AddIntConstant(poModule, "CHARACTER_SLOT_COUNT_MAX", PLAYER_PER_ACCOUNT);
 

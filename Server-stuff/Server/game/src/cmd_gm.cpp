@@ -78,6 +78,26 @@ void Command_ApplyAffect(LPCHARACTER ch, const char* argument, const char* affec
 }
 // END_OF_ADD_COMMAND_SLOW_STUN
 
+ACMD(do_gold) {
+	char arg1[256];
+	one_argument(argument, arg1, sizeof(arg1));
+
+	if (!*arg1) {
+		ch->ChatPacket(CHAT_TYPE_INFO, "Syntax: gold <+amount/-amount>");
+		return;
+	}
+
+	uint32_t amount = 0;
+	str_to_number(amount, arg1);
+
+	uint64_t total = ch->GetGold() + amount;
+	if (total >= GOLD_MAX) {
+		return;
+	}
+
+	ch->PointChange(POINT_GOLD, amount, true);
+}
+
 ACMD(do_stun)
 {
 	Command_ApplyAffect(ch, argument, "stun", COMMANDAFFECT_STUN);

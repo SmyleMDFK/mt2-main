@@ -43,7 +43,7 @@
 #include "../../common/CommonDefines.h"
 
 #include "input.h"
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 #include "mob_manager.h"
 #endif
 
@@ -3035,7 +3035,7 @@ void CInputMain::Refine(LPCHARACTER ch, const char* c_pData)
 	ch->ClearRefineMode();
 }
 
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 void CInputMain::RecvWikiPacket(LPCHARACTER ch, const char * c_pData)
 {
 	if (!ch || (ch && !ch->GetDesc()))
@@ -3420,7 +3420,7 @@ int CInputMain::Analyze(LPDESC d, BYTE bHeader, const char * c_pData)
 			}
 
 			break;
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 		case InGameWiki::HEADER_CG_WIKI:
 			{
 				RecvWikiPacket(ch, c_pData);

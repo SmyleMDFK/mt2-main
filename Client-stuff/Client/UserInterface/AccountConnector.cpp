@@ -19,10 +19,19 @@ void CAccountConnector::SetHandler(PyObject* poHandler)
 	m_poHandler = poHandler;
 }
 
-void CAccountConnector::SetLoginInfo(const char * c_szName, const char * c_szPwd)
+void CAccountConnector::SetLoginInfo(const char * c_szName, const char * c_szPwd
+#if defined(INGAME_REGISTER)
+, bool bRegister, std::string email, std::string social
+#endif
+)
 {
 	m_strID = c_szName;
 	m_strPassword = c_szPwd;
+#if defined(INGAME_REGISTER)
+	m_register = bRegister;
+	m_email = email;
+	m_social = social;
+#endif
 }
 
 
@@ -131,6 +140,16 @@ bool CAccountConnector::__AuthState_Process()
 	if (!__AnalyzePacket(HEADER_GC_LOGIN_FAILURE, sizeof(TPacketGCAuthSuccess), &CAccountConnector::__AuthState_RecvAuthFailure))
 		return true;
 
+#if defined(INGAME_REGISTER)
+	if (!__AnalyzePacket(HEADER_GC_REGISTER_FAIL, sizeof(TPacketGCRegisterFail), &CAccountConnector::__AuthState_RecvRegisterFail)) {
+		return true;
+	}
+
+	if (!__AnalyzePacket(HEADER_GC_REGISTER_SUCCESS, sizeof(TPacketEmpty), &CAccountConnector::__AuthState_RecvRegisterSuccess)) {
+		return true;
+	}
+#endif
+
 	if (!__AnalyzePacket(HEADER_GC_HANDSHAKE, sizeof(TPacketGCHandshake), &CAccountConnector::__AuthState_RecvHandshake))
 		return false;
 
@@ -230,6 +249,45 @@ bool CAccountConnector::__AuthState_RecvPhase()
 		}
 #else /* USE_OPENID */
 
+#if defined(INGAME_REGISTER)
+		if (m_register)
+		{
+			m_register = false;
+
+			TPacketCGRegister p;
+
+			p.header = HEADER_CG_REGISTER;
+			strncpy(p.username, m_strID.c_str(), ID_MAX_NUM);
+			p.username[ID_MAX_NUM] = '\0';
+			strncpy(p.password, m_strPassword.c_str(), PASS_MAX_NUM);
+			p.password[PASS_MAX_NUM] = '\0';
+			strncpy(p.email, m_email.c_str(), EMAIL_MAX_LEN);
+			p.email[EMAIL_MAX_LEN] = '\0';
+			strncpy(p.socialid, m_social.c_str(), SOCIAL_ID_LEN);
+			p.socialid[SOCIAL_ID_LEN] = '\0';
+
+			m_strID = "";
+			m_strPassword = "";
+			m_email = "";
+			m_social = "";
+
+			CPythonNetworkStream::Instance().ClearLoginInfo();
+
+			if (!Send(sizeof(p), &p)) {
+				Tracen(" CAccountConnector::__AuthState_RecvPhase - SendRegister Error");
+				return false;
+			}
+
+			if (!SendSequence()) {
+				return false;
+			}
+
+			__AuthState_Set();
+
+			return true;
+		}
+#endif
+
 		TPacketCGLogin3 LoginPacket;
 		LoginPacket.header = HEADER_CG_LOGIN3;
 
@@ -319,6 +377,46 @@ bool CAccountConnector::__AuthState_SendPong()
 
 	return true;
 }
+
+#if defined(INGAME_REGISTER)
+bool CAccountConnector::__AuthState_RecvRegisterFail() {
+	TPacketGCRegisterFail p;
+	if (!Recv(sizeof(p), &p)) {
+		return false;
+	}
+
+	if (m_poHandler) {
+		PyCallClassMemberFunc(m_poHandler, "OnRegisterFail", Py_BuildValue("(ii)", p.error, p.arg));
+	}
+#ifdef _DEBUG
+	Tracef(" __AuthState_RecvRegisterFail : [%s]\n", packet_failure.error);
+#endif
+
+	Disconnect();
+	SetLoginInfo("", "", false, "", "");
+
+	return true;
+}
+
+bool CAccountConnector::__AuthState_RecvRegisterSuccess() {
+	TPacketEmpty p;
+	if (!Recv(sizeof(p), &p)) {
+		return false;
+	}
+
+	if (m_poHandler) {
+		PyCallClassMemberFunc(m_poHandler, "OnRegisterSuccess", Py_BuildValue("()"));
+	}
+#ifdef _DEBUG
+	Tracef(" __AuthState_RecvRegisterSuccess\n");
+#endif
+
+	Disconnect();
+	SetLoginInfo("", "", false, "", "");
+
+	return true;
+}
+#endif
 
 bool CAccountConnector::__AuthState_RecvAuthSuccess()
 {
@@ -543,7 +641,11 @@ CAccountConnector::CAccountConnector()
 	m_strAddr = "";
 	m_iPort = 0;
 
-	SetLoginInfo("", "");
+	SetLoginInfo("", ""
+#if defined(INGAME_REGISTER)
+, false, "", ""
+#endif
+	);
 	SetRecvBufferSize(1024 * 128);
 	SetSendBufferSize(2048);
 	__Inialize();

@@ -209,6 +209,10 @@ namespace
 	};
 }
 
+#if defined(INGAME_REGISTER)
+extern boost::unordered_map<std::string, uint32_t> g_registerdelay;
+extern uint32_t g_last_registerdelay;
+#endif
 extern std::map<DWORD, CLoginSim *> g_sim; // first: AID
 extern std::map<DWORD, CLoginSim *> g_simByPID;
 extern std::vector<TPlayerTable> g_vec_save;
@@ -244,6 +248,21 @@ void heartbeat(LPHEART ht, int pulse)
 		else
 		{
 			DESC_MANAGER::instance().ProcessExpiredLoginKey();
+#if defined(INGAME_REGISTER)
+			uint32_t timenow = get_global_time();
+			if (timenow > g_last_registerdelay) {
+				g_last_registerdelay = timenow + 300;
+				itertype(g_registerdelay) it = g_registerdelay.begin();
+				while (it != g_registerdelay.end()) {
+					if ((uint32_t)thecore_pulse() > it->second) {
+						g_registerdelay.erase(it++);
+						continue;
+					}
+
+					it++;
+				}
+			}
+#endif
 		}
 
 		{
@@ -449,6 +468,11 @@ int main(int argc, char **argv)
 					break;
 		} while (1);
 	}
+
+#if defined(INGAME_REGISTER)
+	sys_log(0, "<shutdown> Clearing register delay map...");
+	g_registerdelay.clear();
+#endif
 
 	sys_log(0, "<shutdown> Destroying CArenaManager...");
 	arena_manager.Destroy();

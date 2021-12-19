@@ -31,6 +31,10 @@ class CMainPacketHeaderMap : public CNetworkPacketHeaderMap
 	public:
 		CMainPacketHeaderMap()
 		{
+//#if defined(INGAME_REGISTER)
+//			Set(HEADER_GC_REGISTER_FAIL, CNetworkPacketHeaderMap::TPacketType(sizeof(TPacketGCRegisterFail), STATIC_SIZE_PACKET));
+//			Set(HEADER_GC_REGISTER_SUCCESS, CNetworkPacketHeaderMap::TPacketType(sizeof(TPacketEmpty), STATIC_SIZE_PACKET));
+//#endif
 			Set(HEADER_GC_EMPIRE,				CNetworkPacketHeaderMap::TPacketType(sizeof(TPacketGCEmpire), STATIC_SIZE_PACKET));
 			Set(HEADER_GC_WARP,					CNetworkPacketHeaderMap::TPacketType(sizeof(TPacketGCWarp), STATIC_SIZE_PACKET));
 			Set(HEADER_GC_SKILL_COOLTIME_END,	CNetworkPacketHeaderMap::TPacketType(sizeof(TPacketGCSkillCoolTimeEnd), STATIC_SIZE_PACKET));

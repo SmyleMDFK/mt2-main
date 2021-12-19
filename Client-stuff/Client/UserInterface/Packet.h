@@ -30,6 +30,9 @@ enum
 	HEADER_CG_QUICKSLOT_SWAP                    = 18,
 	HEADER_CG_WHISPER							= 19,
 	HEADER_CG_ITEM_DROP2                        = 20,
+#if defined(INGAME_REGISTER)
+	HEADER_CG_REGISTER = 21,
+#endif
 	//HEADER_BLANK21								= 21,
 	//HEADER_BLANK22								= 22,
 	//HEADER_BLANK22								= 23,
@@ -183,7 +186,6 @@ enum
 	HEADER_GC_ALERT								= 35,
 
 	HEADER_GC_MOTION							= 36,
-
 	HEADER_GC_SHOP							    = 38,
 	HEADER_GC_SHOP_SIGN							= 39,
 
@@ -197,7 +199,10 @@ enum
 
 	HEADER_GC_SCRIPT							= 45,
     HEADER_GC_QUEST_CONFIRM                     = 46,
-
+#if defined(INGAME_REGISTER)
+	HEADER_GC_REGISTER_FAIL = 47,
+	HEADER_GC_REGISTER_SUCCESS = 48,
+#endif
 	HEADER_GC_MOUNT								= 61,
 	HEADER_GC_OWNERSHIP                         = 62,
     HEADER_GC_TARGET                            = 63,
@@ -337,6 +342,13 @@ enum
 
 enum
 {
+#if defined(INGAME_REGISTER)
+	LOGIN_MIN_LEN = 2,
+	PASSWORD_MIN_LEN = 4,
+	EMAIL_MIN_LEN = 7,
+	EMAIL_MAX_LEN = 110,
+	SOCIAL_ID_LEN = 7,
+#endif
 	ID_MAX_NUM = 30,
 	PASS_MAX_NUM = 16,
 	CHAT_MAX_NUM = 128,
@@ -2418,6 +2430,23 @@ enum EBlockAction
     BLOCK_MESSENGER_INVITE      = (1 << 4),
     BLOCK_PARTY_REQUEST         = (1 << 5),
 };
+
+#if defined(INGAME_REGISTER)
+typedef struct packet_register
+{
+	uint8_t header;
+	char username[ID_MAX_NUM + 1], password[PASS_MAX_NUM + 1], email[EMAIL_MAX_LEN + 1], socialid[SOCIAL_ID_LEN + 1];
+} TPacketCGRegister;
+
+typedef struct packet_register_fail {
+	uint8_t header, error;
+	int32_t arg;
+} TPacketGCRegisterFail;
+#endif
+
+typedef struct packet_empty {
+	uint8_t header;
+} TPacketEmpty;
 
 typedef struct packet_login_key
 {

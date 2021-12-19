@@ -1778,4 +1778,9 @@ void initapp()
 #else
 	PyModule_AddIntConstant(poModule, "ENABLE_ELEMENT_ADD", false);
 #endif
+#if defined(INGAME_REGISTER)
+	PyModule_AddIntConstant(poModule, "INGAME_REGISTER", true);
+#else
+	PyModule_AddIntConstant(poModule, "INGAME_REGISTER", false);
+#endif
 }

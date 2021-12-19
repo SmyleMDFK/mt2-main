@@ -2,7 +2,7 @@
 #include "../../common/stl.h"
 #include "constants.h"
 #include "packet_info.h"
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 #include "../../common/in_game_wiki.h"
 #endif
 
@@ -137,6 +137,9 @@ void CPacketInfo::Log(const char * c_pszFileName)
 
 CPacketInfoCG::CPacketInfoCG()
 {
+#if defined(INGAME_REGISTER)
+	Set(HEADER_CG_REGISTER, sizeof(TPacketCGRegister), "Register", true);
+#endif
 	Set(HEADER_CG_TEXT, sizeof(TPacketCGText), "Text", false);
 	Set(HEADER_CG_HANDSHAKE, sizeof(TPacketCGHandshake), "Handshake", false);
 	Set(HEADER_CG_TIME_SYNC, sizeof(TPacketCGHandshake), "TimeSync", true);
@@ -166,6 +169,7 @@ CPacketInfoCG::CPacketInfoCG()
 	Set(HEADER_CG_ITEM_USE, sizeof(TPacketCGItemUse), "ItemUse", true);
 	Set(HEADER_CG_ITEM_DROP, sizeof(TPacketCGItemDrop), "ItemDrop", true);
 	Set(HEADER_CG_ITEM_DROP2, sizeof(TPacketCGItemDrop2), "ItemDrop2", true);
+
 	Set(HEADER_CG_ITEM_MOVE, sizeof(TPacketCGItemMove), "ItemMove", true);
 	Set(HEADER_CG_ITEM_PICKUP, sizeof(TPacketCGItemPickup), "ItemPickup", true);
 
@@ -230,7 +234,7 @@ CPacketInfoCG::CPacketInfoCG()
 
 	Set(HEADER_CG_DRAGON_SOUL_REFINE, sizeof(TPacketCGDragonSoulRefine), "DragonSoulRefine", false);
 	Set(HEADER_CG_STATE_CHECKER, sizeof(BYTE), "ServerStateCheck", false);
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 	Set(InGameWiki::HEADER_CG_WIKI, sizeof(InGameWiki::TCGWikiPacket), "RecvWikiPacket", true);
 #endif
 }

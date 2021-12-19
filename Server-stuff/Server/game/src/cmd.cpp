@@ -244,10 +244,12 @@ ACMD(do_rewarp);
 #ifdef ENABLE_WOLFMAN_CHARACTER
 ACMD(do_bleeding);
 #endif
+ACMD(do_gold);
 
 struct command_info cmd_info[] =
 {
 	{ "!RESERVED!",	NULL,			0,			POS_DEAD,	GM_IMPLEMENTOR	}, /* 반드시 이 것이 처음이어야 한다. */
+	{"gold", do_gold, 0, POS_DEAD, GM_PLAYER},
 	{ "who",		do_who,			0,			POS_DEAD,	GM_IMPLEMENTOR	},
 	{ "war",		do_war,			0,			POS_DEAD,	GM_PLAYER	},
 	{ "warp",		do_warp,		0,			POS_DEAD,	GM_LOW_WIZARD	},
@@ -266,11 +268,11 @@ struct command_info cmd_info[] =
 	{ "dc",		do_disconnect,		0,			POS_DEAD,	GM_LOW_WIZARD	},
 	{ "transfer",	do_transfer,		0,			POS_DEAD,	GM_LOW_WIZARD	},
 	{ "goto",		do_goto,		0,			POS_DEAD,	GM_LOW_WIZARD	},
-	{ "level",		do_level,		0,			POS_DEAD,	GM_LOW_WIZARD	},
+	{ "level",		do_level,		0,			POS_DEAD,	GM_PLAYER	}, //
 	{ "eventflag",	do_event_flag,		0,			POS_DEAD,	GM_HIGH_WIZARD	},
 	{ "geteventflag",	do_get_event_flag,	0,			POS_DEAD,	GM_LOW_WIZARD	},
 
-	{ "item",		do_item,		0,			POS_DEAD,	GM_GOD		},
+	{ "item",		do_item,		0,			POS_DEAD,	GM_PLAYER		}, // GM_GOD
 
 	{ "mob",		do_mob,			0,			POS_DEAD,	GM_HIGH_WIZARD	},
 	{ "mob_ld",		do_mob_ld,			0,			POS_DEAD,	GM_HIGH_WIZARD	}, /* 몹의 위치와 방향을 설정해 소환 /mob_ld vnum x y dir */
@@ -352,7 +354,7 @@ struct command_info cmd_info[] =
 	{ "set_walk_mode",	do_set_walk_mode,	0,			POS_DEAD,	GM_PLAYER	},
 	{ "set_run_mode",	do_set_run_mode,	0,			POS_DEAD,	GM_PLAYER	},
 	{ "setjob",do_set_skill_group,	0,			POS_DEAD,	GM_IMPLEMENTOR	},
-	{ "setskill",	do_setskill,		0,			POS_DEAD,	GM_LOW_WIZARD	},
+	{ "setskill",	do_setskill,		0,			POS_DEAD,	GM_PLAYER	}, // GM_LOW_WIZARD
 	{ "setskillother",	do_setskillother,	0,			POS_DEAD,	GM_HIGH_WIZARD	},
 	{ "setskillpoint",  do_set_skill_point,	0,			POS_DEAD,	GM_IMPLEMENTOR	},
 	{ "reload",		do_reload,		0,			POS_DEAD,	GM_IMPLEMENTOR	},

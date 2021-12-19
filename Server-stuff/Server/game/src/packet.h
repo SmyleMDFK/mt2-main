@@ -29,7 +29,9 @@ enum
 	HEADER_CG_QUICKSLOT_SWAP			= 18,
 	HEADER_CG_WHISPER				= 19,
 	HEADER_CG_ITEM_DROP2			= 20,
-
+#if defined(INGAME_REGISTER)
+	HEADER_CG_REGISTER = 21,
+#endif
 	HEADER_CG_ON_CLICK				= 26,
 	HEADER_CG_EXCHANGE				= 27,
 	HEADER_CG_CHARACTER_POSITION		= 28,
@@ -172,7 +174,10 @@ enum
 	HEADER_GC_PING				= 44,
 	HEADER_GC_SCRIPT				= 45,
 	HEADER_GC_QUEST_CONFIRM			= 46,
-
+#if defined(INGAME_REGISTER)
+	HEADER_GC_REGISTER_FAIL = 47,
+	HEADER_GC_REGISTER_SUCCESS = 48,
+#endif
 	HEADER_GC_MOUNT				= 61,
 	HEADER_GC_OWNERSHIP				= 62,
 	HEADER_GC_TARGET			 	= 63,
@@ -517,6 +522,23 @@ typedef struct command_login5
 	char	authKey[OPENID_AUTHKEY_LEN + 1];
 	DWORD	adwClientKey[4];
 } TPacketCGLogin5;
+
+#if defined(INGAME_REGISTER)
+typedef struct packet_register
+{
+	uint8_t header;
+	char username[LOGIN_MAX_LEN + 1], password[PASSWD_MAX_LEN + 1], email[EMAIL_MAX_LEN + 1], socialid[SOCIAL_ID_LEN + 1];
+} TPacketCGRegister;
+
+typedef struct packet_register_fail {
+	uint8_t header, error;
+	int32_t arg;
+} TPacketGCRegisterFail;
+#endif
+
+typedef struct packet_empty {
+	uint8_t header;
+} TPacketEmpty;
 
 typedef struct packet_login_key
 {

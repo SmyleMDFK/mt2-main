@@ -3,6 +3,10 @@
 
 #include "packet_info.h"
 
+#if defined(INGAME_REGISTER)
+#include <boost/unordered_map.hpp>
+#endif
+
 enum
 {
 	INPROC_CLOSE,
@@ -147,7 +151,7 @@ class CInputMain : public CInputProcessor
 		void		PartyUseSkill(LPCHARACTER ch, const char * c_pData);
 		void		PartyParameter(LPCHARACTER ch, const char * c_pData);
 
-#if defined(__INGAME_WIKI__)
+#if defined(INGAME_WIKI)
 		void RecvWikiPacket(LPCHARACTER ch, const char * c_pData);
 #endif
 
@@ -361,6 +365,10 @@ class CInputAuth : public CInputProcessor
 	public:
 		void		Login(LPDESC d, const char * c_pData);
 		void		LoginOpenID(LPDESC d, const char * c_pData);		//2012.07.19 OpenID : ±è¿ë¿í
+#if defined(INGAME_REGISTER)
+		void RegisterFail(LPDESC d, uint8_t error, int32_t arg);
+		void Register(LPDESC d, const char * c_pData);
+#endif
 };
 
 class CInputTeen : public CInputProcessor
