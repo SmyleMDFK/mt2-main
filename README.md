@@ -13,6 +13,7 @@
  - Compilare testata pe: FreeBSD 13.0 & VS 2022
  
  ## Changelogs:
+ - INGAME_REGISTER: permite inregistrare cont direct din joc poate fi activata/dezactivata (https://i.gyazo.com/2f94a0b391c8c2d1b913fc873ae04324.mp4). #50003
  - Am creat o noua functie folosita in uicharacter.py: player.IsPoly(). #50002
  - Am terminat de adaptat fereastra principala a caracterului (https://i.gyazo.com/8563690f81cc68e0bb8b577780a2fa13.mp4). #50002
  - Am eliminat tot ce tine passpod-auth. #50001
